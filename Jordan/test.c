@@ -13,10 +13,10 @@ int main(){
   }
   for(i=1; i<=n; i++){
     if(i==1){
-      fprintf(fp, "%i %i\n", (2*i), (2*i+1));
+      fprintf(fp, "%i %i\n", (2*i-1), (2*i));
       continue;
     }
-    fprintf(fp,"%i %i %i\n", (i/2), (2*i), (2*i+1));
+    fprintf(fp,"%i %i %i\n", (i/2-1), (2*i-1), (2*i));
   }
   fclose (fp);
 
