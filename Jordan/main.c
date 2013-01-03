@@ -67,9 +67,7 @@ void add_neighbours(VERTEX * temp, unsigned int n, FIFO * Q)
     unsigned int i;
     int neighbour_temp;
     for (i = 0; i < n; i++) {
-	printf
-	    ("Podaj wszystkich sasiadow wierzcholka %d: (Liczba < 0 przerywa wprowadzenie)\n",
-	     i);
+      //printf("Podaj wszystkich sasiadow wierzcholka %d: (Liczba < 0 przerywa wprowadzenie)\n",i);
 	while (1) {
 	    scanf("%d", &neighbour_temp);
 	    if (neighbour_temp >= 0) {
