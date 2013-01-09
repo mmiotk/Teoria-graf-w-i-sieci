@@ -5,6 +5,11 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <math.h>
+#include <limits.h>
+#include <unistd.h>
+#include <time.h>
+#define MLD 1000000000.0
+
 
 typedef enum {FALSE , TRUE } bool;
 
@@ -12,6 +17,8 @@ typedef struct POINT{
 	double xx;
 	double yy;
 	int deg;
+	bool is_visited;
+  unsigned int color;
 }POINT;
 typedef struct SEGMENT{
 	POINT a;
@@ -24,6 +31,12 @@ typedef struct POLYGON{
 	int **segments;
 	double max_of_x;
 }POLYGON;
+
+typedef struct stack{
+  unsigned int top;
+  unsigned int *vertex;
+  unsigned int size;
+}stack;
 
 /*point.c*/
 int add_point(POINT *a);
@@ -48,6 +61,8 @@ int free_segments(int **tab,unsigned int size);
 int add_segments(POINT *points,int **tab,int size);
 void triangulal_polygol(POLYGON a);
 int check_segments(int a,int b,POLYGON temp);
+void draw_polygon(POLYGON t);
+double oblicz_czas(struct timespec kon,struct timespec pocz);
 /*****************/
 
 /*Collinear.c*/
@@ -65,5 +80,19 @@ bool InCone( int i, int j, POLYGON P );
 bool Diagonal(int i, int j, POLYGON P);
 bool DiagonalIntExt( int i, int j, POLYGON P );
 /*****************/
+
+/*coloring.c*/
+stack *allocation_stack(unsigned int n);
+bool stack_empty(stack *s);
+bool Push(stack *s, unsigned int x);
+unsigned int Pop(stack *s);
+void free_stack(stack *s);
+stack *filling_stack(POINT *tab, unsigned int n);
+int coloring_sl(POINT *tab, int **edge, unsigned int n);
+bool color_exist(POINT *tab,int **edge,unsigned int n,int color,int w);
+int count_colors(POINT *tab,unsigned int n);
+int get_max_color(POINT *tab,int **edge,int inx,unsigned int n);
+void print_colors(POINT *tab,unsigned int n);
+/*************/
 
 #endif

@@ -1,7 +1,7 @@
 CC=gcc
-CFLAGS=-c -Wall -g
+CFLAGS=-c -Wall -g -lrt
 LDFLAGS=
-SOURCES=main.c point.c segment.c tests.c polygon.c collinear.c pointinsearch.c
+SOURCES=main.c point.c segment.c tests.c polygon.c collinear.c pointinsearch.c coloring.c
 OBJECTS=$(SOURCES:.c=.o)
 EXECUTABLE=program
 LIBRARY=lib.h

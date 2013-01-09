@@ -24,7 +24,6 @@ int alloc_points(double *a,POINT **tab,unsigned int size){
 		if(maxi_temp<temp[i].xx)
 		maxi_temp=temp[i].xx;
 	}
-	printf("BLA %lf\n",maxi_temp);
 	*a=maxi_temp;
 	*tab=temp;
 	
@@ -73,11 +72,10 @@ int add_segments(POINT *points,int **tab,int size){
 
 void triangulal_polygol(POLYGON a){
 	int i,j;
-	POLYGON y=a;
 	for(i=0;i<a.size_points;i++){
 		for(j=i;j<a.size_points;j++){
 			if(i!=j && a.segments[i][j]==0){
-				printf("Sprawdzam dla punktow: %lf %lf %lf %lf\n",a.points[i].xx,a.points[i].yy,a.points[j].xx,a.points[j].yy);
+				//printf("Sprawdzam dla punktow: %lf %lf %lf %lf\n",a.points[i].xx,a.points[i].yy,a.points[j].xx,a.points[j].yy);
 				
 					POINT divide;
 					divide.xx = (a.points[j].xx+a.points[i].xx)/2;
@@ -112,4 +110,30 @@ int check_segments(int a,int b,POLYGON temp){
 	return TRUE;
 }
 
+void draw_polygon(POLYGON t){
+	FILE *temp ;
+	if((temp= fopen("plik.dat","w"))==NULL){
+		perror("Nie mozna utworzyc pliku");
+		exit(1);
+	}
+	int i,j;
+	for(i=0;i<t.size_points;i++){
+		for(j=i;j<t.size_points;j++){
+			if(t.segments[i][j]==1){
+			fprintf(temp,"%lf %lf\n%lf %lf\n",t.points[i].xx,t.points[i].yy,t.points[j].xx,t.points[j].yy);
+			if(i<t.size_points-1)
+			fprintf(temp,"next\n");
+			}
+		}
+	}
+	fclose(temp);
+	system("xgraph plik.dat");
+	remove("plik.dat");
+	
+}
 
+double oblicz_czas(struct timespec kon,struct timespec pocz){
+  double wynik;
+  wynik=(pocz.tv_sec+pocz.tv_nsec/MLD)-(kon.tv_sec+kon.tv_nsec/MLD);
+  return wynik;
+}
